@@ -8,7 +8,12 @@ def showMenu():
 def inputDirection():
     while True:
         showMenu()
-        choice = int(input("Choose your input: "))
+        while True:
+            try:
+                choice = int(input("Choose your input: "))
+                break
+            except ValueError:
+                print("Invalid Input, Enter only integers")
 
         if choice == 1:
             print('Add Selected')
@@ -21,7 +26,7 @@ def inputDirection():
             break
             
         else:
-            print('Invalid input')
+            print('Invalid Integer')
 
 if __name__ == "__main__":
     inputDirection()
