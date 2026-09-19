@@ -103,7 +103,17 @@ def addExpense():
     expenses.append(expense_dict)
     print('Expense added successfully!')
 
+def viewExpense():
+    if not expenses:
+        print("No expense present, Create expense")
+        return
 
+    elif expenses:
+        for index,expense in enumerate(expenses, start=1):
+            print(f"\nExpense {index}")
+            print(f"Name: {expense['name']}")
+            print(f"Amount: {expense['amount']}")
+            print(f"Category: {expense['category']}")
 
 def main():
     while True:
@@ -120,7 +130,8 @@ def main():
             addExpense()      
 
         elif choice == 2:
-            print(expenses)
+            print('View Selected')
+            viewExpense()
 
         elif choice == 3:
             print('Goodbye!')
