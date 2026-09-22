@@ -103,17 +103,73 @@ def addExpense():
     expenses.append(expense_dict)
     print('Expense added successfully!')
 
+def showExpenseView():
+    print("1 -> View All")
+    print("2 -> View By Category")
+    print("3 -> Back")
+
 def viewExpense():
     if not expenses:
         print("No expense present, Create expense")
         return
 
-    elif expenses:
-        for index,expense in enumerate(expenses, start=1):
-            print(f"\nExpense {index}")
-            print(f"Name: {expense['name']}")
-            print(f"Amount: {expense['amount']}")
-            print(f"Category: {expense['category']}")
+    while True:
+        showExpenseView()
+        while True:
+            try:
+                choice = int(input("Choose your input: "))                
+                break
+            except ValueError:
+                print("Invalid Input, Enter only integers")
+        
+        if choice == 1:
+            totalAmount = 0
+            for index,expense in enumerate(expenses, start=1):
+                print(f"\nExpense {index}")
+                print(f"Name: {expense['name']}")
+                print(f"Amount: {expense['amount']}")
+                print(f"Category: {expense['category']}")
+                totalAmount += expense['amount']
+            print(f"\nTotal: {totalAmount}\n")
+
+        elif choice == 2:
+            print("Choose Category: ")
+            for index,category in enumerate(categories, start=1):
+                print(f"{index} -> {category}", end=" ")
+                totalAmount = 0
+                for expense in expenses:
+                    if expense['category'] == category:
+                        totalAmount += expense['amount']
+                print(totalAmount)
+
+            while True:
+                while True:
+                    try:
+                        chooseCat = int(input("Choose your input: "))                
+                        break
+                    except ValueError:
+                        print("Invalid Input, Enter only integers")
+                if chooseCat >=1 and chooseCat <= len(categories):
+                    break
+                else:
+                    print("Choose valid option, Try again!")
+
+            target_category = categories[chooseCat-1]
+            print(f"\nExpenses of {target_category}:")
+            index = 0
+            total = 0
+            for expense in expenses:
+                if expense['category'] == target_category:
+                    index += 1
+                    print(f"\nExpense {index}")
+                    print(f"Name: {expense['name']}")
+                    print(f"Amount: {expense['amount']}")
+                    print(f"Category: {expense['category']}")
+                    total += expense['amount']
+            print (f"\nTotal: {total}")
+
+        elif choice == 3:
+            break
 
 def main():
     while True:
