@@ -194,7 +194,7 @@ def main():
             break
 
         else:
-            print('Invalid Integer')
+            print('Invalid Integer, Try again!')
 
 if __name__ == "__main__":
     main()
