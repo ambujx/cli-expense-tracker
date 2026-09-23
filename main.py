@@ -121,14 +121,12 @@ def viewExpense():
                 break
             except ValueError:
                 print("Invalid Input, Enter only integers")
-        
+
         if choice == 1:
             totalAmount = 0
+            print(f"\n{'No.':<5}{'Expense':<15}{'Amount':<12}{'Category'}")
             for index,expense in enumerate(expenses, start=1):
-                print(f"\nExpense {index}")
-                print(f"Name: {expense['name']}")
-                print(f"Amount: {expense['amount']}")
-                print(f"Category: {expense['category']}")
+                print(f"\n{index:<5} {expense['name']:<15} {expense['amount']:<12} {expense['category']}")
                 totalAmount += expense['amount']
             print(f"\nTotal: {totalAmount}\n")
 
@@ -161,12 +159,9 @@ def viewExpense():
             for expense in expenses:
                 if expense['category'] == target_category:
                     index += 1
-                    print(f"\nExpense {index}")
-                    print(f"Name: {expense['name']}")
-                    print(f"Amount: {expense['amount']}")
-                    print(f"Category: {expense['category']}")
+                    print(f"\n{index:<5} {expense['name']:<15} {expense['amount']}")
                     total += expense['amount']
-            print (f"\nTotal: {total}")
+            print (f"\nTotal: {total}\n")
 
         elif choice == 3:
             break
