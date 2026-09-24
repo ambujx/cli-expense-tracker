@@ -9,7 +9,8 @@ def showMenu():
     print('Choose Operation:')
     print("1 -> Add Expense")
     print("2 -> View Expenses")
-    print("3 -> Exit")
+    print("3 -> Delete Expense")
+    print("4 -> Exit")
 
 def writeExpName():
     while True:
@@ -27,7 +28,6 @@ def writeExpName():
         elif(typecheck == False):
             print('Only string input allowed, Try again!')
 
-
 def writeExpAmount():
     while True:
         while True:
@@ -40,7 +40,6 @@ def writeExpAmount():
             return expAmount
         else:
             print('Amount should be Greater than Zero, Try again!')  
-
 
 def chooseCategory():
     print("Choose a Category: ")
@@ -83,7 +82,6 @@ def chooseCategory():
     elif categoryOption >= 1 and categoryOption <= len(categories):
         expCategory = categories[categoryOption-1]
     return expCategory
-
 
 def addExpense():
     print('Add Expense:')
@@ -172,8 +170,66 @@ def viewExpense():
         elif choice == 3:
             break
 
+def toDelshowExpenseView():
+    print("1 -> View All to DELETE")
+    print("2 -> View By Category to DELETE")
+    print("3 -> Back")
 
+def delExpense():
+    if not expenses :
+        print("No Expense Found")
+        return
+    toDelshowExpenseView()
+    while True:
+        try:
+            choice = int(input("Choose your input: "))                
+            break
+        except ValueError:
+            print("Invalid Input, Enter only integers")
 
+    if choice == 1:
+        while True:
+            viewAllExpense()
+            while True:
+                try:
+                    choice_to_delete = int(input("Choose expense to DELETE: "))                
+                    break
+                except ValueError:
+                    print("Invalid Input, Enter only integers")
+
+            
+            if choice_to_delete >= 1 and choice_to_delete <= len(expenses):
+                toDelete = expenses[choice_to_delete-1]
+                print(f"\n{toDelete['name']} - {toDelete['amount']} - {toDelete['category']}")
+
+                while True:
+                    delete_confirmation = input("Delete this expense? [y/n]:")
+                    if delete_confirmation == 'y' or delete_confirmation == 'Y':    
+                        del expenses[choice_to_delete-1]
+                        break
+                    elif delete_confirmation == 'n' or delete_confirmation == 'N':
+                        print("Exiting DELETE")
+                        break
+                    else:
+                        print("Choose [y/n]! Try again!")
+
+            elif choice_to_delete == 0:
+                break
+            else:
+                print("Choose valid option, Try again!")
+
+    elif choice == 2:
+        while True:
+            viewByCategory()
+            while True:
+                try:
+                    choice_to_delete = int(input("Choose expense to DELETE: "))                
+                    break
+                except ValueError:
+                    print("Invalid Input, Enter only integers")
+            if choice_to_delete >= 1 and choice_to_delete <= len(categories):
+                pass
+            
 
 def main():
     while True:
@@ -194,6 +250,9 @@ def main():
             viewExpense()
 
         elif choice == 3:
+            delExpense()
+
+        elif choice == 4:
             print('Goodbye!')
             break
 
