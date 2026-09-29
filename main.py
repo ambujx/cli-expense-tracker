@@ -170,7 +170,6 @@ def viewExpense():
         elif choice == 3:
             break
 
-def toDelshowExpenseView():
     print("1 -> View All to DELETE")
     print("2 -> View By Category to DELETE")
     print("3 -> Back")
@@ -179,19 +178,12 @@ def delExpense():
     if not expenses :
         print("No Expense Found")
         return
-    toDelshowExpenseView()
-    while True:
-        try:
-            choice = int(input("Choose your input: "))                
-            break
-        except ValueError:
-            print("Invalid Input, Enter only integers")
 
-    if choice == 1:
-        while True:
+    while True:
             viewAllExpense()
             while True:
                 try:
+                    print ("0 => Back")
                     choice_to_delete = int(input("Choose expense to DELETE: "))                
                     break
                 except ValueError:
@@ -204,10 +196,10 @@ def delExpense():
 
                 while True:
                     delete_confirmation = input("Delete this expense? [y/n]:")
-                    if delete_confirmation == 'y' or delete_confirmation == 'Y':    
+                    if delete_confirmation.lower() == 'y':    
                         del expenses[choice_to_delete-1]
                         break
-                    elif delete_confirmation == 'n' or delete_confirmation == 'N':
+                    elif delete_confirmation.lower() == 'n':
                         print("Exiting DELETE")
                         break
                     else:
@@ -218,17 +210,8 @@ def delExpense():
             else:
                 print("Choose valid option, Try again!")
 
-    elif choice == 2:
-        while True:
-            viewByCategory()
-            while True:
-                try:
-                    choice_to_delete = int(input("Choose expense to DELETE: "))                
-                    break
-                except ValueError:
-                    print("Invalid Input, Enter only integers")
-            if choice_to_delete >= 1 and choice_to_delete <= len(categories):
-                pass
+
+            
             
 
 def main():
