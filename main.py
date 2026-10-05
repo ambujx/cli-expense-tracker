@@ -180,6 +180,8 @@ def delExpense():
         return
 
     while True:
+            if not expenses:
+                break
             viewAllExpense()
             while True:
                 try:
@@ -205,14 +207,11 @@ def delExpense():
                     else:
                         print("Choose [y/n]! Try again!")
 
+
             elif choice_to_delete == 0:
                 break
             else:
-                print("Choose valid option, Try again!")
-
-
-            
-            
+                print("Choose valid option, Try again!")         
 
 def main():
     while True:
