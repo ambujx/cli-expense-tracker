@@ -93,6 +93,7 @@ def addExpense():
     expCategory = chooseCategory()
 
     expense_dict = {
+        'id' : len(expenses)+1,
         'name': expName,
         'amount': expAmount,
         'category': expCategory
@@ -109,8 +110,8 @@ def showExpenseView():
 def viewAllExpense():
     totalAmount = 0
     print(f"\n{'No.':<5}{'Expense':<15}{'Amount':<12}{'Category'}")
-    for index,expense in enumerate(expenses, start=1):
-        print(f"\n{index:<5} {expense['name']:<15} {expense['amount']:<12} {expense['category']}")
+    for expense in expenses:
+        print(f"\n{expense['id']:<5} {expense['name']:<15} {expense['amount']:<12} {expense['category']}")
         totalAmount += expense['amount']
     print(f"\nTotal: {totalAmount}\n")
 
