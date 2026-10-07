@@ -14,7 +14,10 @@ def showMenu():
 
 def writeExpName():
     while True:
+        print("0 -> Back")
         expName = input('\tExpense name: ')
+        if expName == "0":
+            return 0
         try:
             expName = float(expName)
             typecheck = False
@@ -30,19 +33,23 @@ def writeExpName():
 
 def writeExpAmount():
     while True:
+        print("0 -> Back")
         while True:
             try:
                 expAmount = float(input('\tAmount: '))
                 break
             except ValueError:
                 print('Amount should be a NUMBER, Try again!')
-        if expAmount > 0:
+        if expAmount == 0:
+            return 0
+        elif expAmount > 0:
             return expAmount
         else:
             print('Amount should be Greater than Zero, Try again!')  
 
 def chooseCategory():
     print("Choose a Category: ")
+    print("0 -> Back")
     for index, category in enumerate(categories, start=1):
         print(f"{index}-> {category}")
     print(f"{len(categories)+1}-> Create new category")
@@ -53,6 +60,11 @@ def chooseCategory():
                 break
             except ValueError:
                 print("Only integers are allowed, Try again!")
+
+        if categoryOption == 0:
+            expCategory = 0
+            return expCategory
+        
         if categoryOption >= 1 and categoryOption <= len(categories)+1:
             break
         else:
@@ -60,7 +72,10 @@ def chooseCategory():
 
     if categoryOption == len(categories)+1:
         while True:
+            print("0 -> Back")
             expCategory = input('\tNew category name: ')
+            if expCategory == "0":
+                return 0
             expCategory = string.capwords(expCategory)
             try:
                 float(expCategory)
@@ -84,23 +99,32 @@ def chooseCategory():
     return expCategory
 
 def addExpense():
-    print('Add Expense:')
+    while True:
+        print('Add Expense:')
 
-    expName = writeExpName()
+        expName = writeExpName()
+        if expName == 0:
+            break
 
-    expAmount = writeExpAmount()
 
-    expCategory = chooseCategory()
+        expAmount = writeExpAmount()
+        if expAmount == 0:
+            break
 
-    expense_dict = {
-        'id' : len(expenses)+1,
-        'name': expName,
-        'amount': expAmount,
-        'category': expCategory
-    }
+        expCategory = chooseCategory()
+        if expCategory == 0:
+            break
 
-    expenses.append(expense_dict)
-    print('Expense added successfully!')
+        expense_dict = {
+            'id' : len(expenses)+1,
+            'name': expName,
+            'amount': expAmount,
+            'category': expCategory
+        }
+
+        expenses.append(expense_dict)
+        print('Expense added successfully!')
+        break
 
 def showExpenseView():
     print("1 -> View All")
@@ -226,7 +250,7 @@ def main():
                 print("Invalid Input, Enter only integers")
 
         if choice == 1:
-            addExpense()      
+            addExpense()
 
         elif choice == 2:
             print('View Selected')
