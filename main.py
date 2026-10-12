@@ -1,8 +1,35 @@
+import json
 import string
+import os
 
-expenses = []
 
+def loadJSON():
+    if not os.path.exists("expenses.json"):
+        return []
+
+    with open ("expenses.json", "r") as file:
+        try:
+            return json.load(file)
+        except:
+            return []
+
+def dumpJSON():
+    with open ("expenses.json", "w") as file:
+        json.dump(expenses, file, indent=4)
+
+def del_expense(expenses, del_index):
+    for expense in expenses:
+        if expense["id"] == del_index:
+            json.remove(expense)
+
+expenses = loadJSON()
 categories = []
+
+for item in expenses:
+    category = item['category']
+    if category not in categories:
+        categories.append(category)
+
 
 def showMenu():
     print()
@@ -106,7 +133,6 @@ def addExpense():
         if expName == 0:
             break
 
-
         expAmount = writeExpAmount()
         if expAmount == 0:
             break
@@ -123,6 +149,9 @@ def addExpense():
         }
 
         expenses.append(expense_dict)
+
+        dumpJSON()
+
         print('Expense added successfully!')
         break
 
@@ -225,6 +254,8 @@ def delExpense():
                     delete_confirmation = input("Delete this expense? [y/n]:")
                     if delete_confirmation.lower() == 'y':    
                         del expenses[choice_to_delete-1]
+                        dumpJSON()
+                        print("Deleted successfully")
                         break
                     elif delete_confirmation.lower() == 'n':
                         print("Exiting DELETE")
@@ -237,6 +268,7 @@ def delExpense():
                 break
             else:
                 print("Choose valid option, Try again!")         
+
 
 def main():
     while True:
