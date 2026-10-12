@@ -17,10 +17,6 @@ def dumpJSON():
     with open ("expenses.json", "w") as file:
         json.dump(expenses, file, indent=4)
 
-def del_expense(expenses, del_index):
-    for expense in expenses:
-        if expense["id"] == del_index:
-            json.remove(expense)
 
 expenses = loadJSON()
 
@@ -169,8 +165,9 @@ def showExpenseView():
 def viewAllExpense():
     totalAmount = 0
     print(f"\n{'No.':<5}{'Expense':<15}{'Amount':<12}{'Category'}")
-    for expense in expenses:
-        print(f"\n{expense['id']:<5} {expense['name']:<15} {expense['amount']:<12} {expense['category']}")
+
+    for index, expense in enumerate(expenses, start=1):
+        print(f"\n{index:<5} {expense['name']:<15} {expense['amount']:<12} {expense['category']}")
         totalAmount += expense['amount']
     print(f"\nTotal: {totalAmount}\n")
 
@@ -240,40 +237,40 @@ def delExpense():
         return
 
     while True:
-            if not expenses:
+        if not expenses:
+            break
+        viewAllExpense()
+        while True:
+            try:
+                print ("0 => Back")
+                choice_to_delete = int(input("Choose expense to DELETE: "))                
                 break
-            viewAllExpense()
+            except ValueError:
+                print("Invalid Input, Enter only integers")
+
+        
+        if choice_to_delete >= 1 and choice_to_delete <= len(expenses):
+            toDelete = expenses[choice_to_delete-1]
+            print(f"\n{toDelete['name']} - {toDelete['amount']} - {toDelete['category']}")
+
             while True:
-                try:
-                    print ("0 => Back")
-                    choice_to_delete = int(input("Choose expense to DELETE: "))                
+                delete_confirmation = input("Delete this expense? [y/n]:")
+                if delete_confirmation.lower() == 'y':    
+                    del expenses[choice_to_delete-1]
+                    dumpJSON()
+                    print("Deleted successfully")
                     break
-                except ValueError:
-                    print("Invalid Input, Enter only integers")
-
-            
-            if choice_to_delete >= 1 and choice_to_delete <= len(expenses):
-                toDelete = expenses[choice_to_delete-1]
-                print(f"\n{toDelete['name']} - {toDelete['amount']} - {toDelete['category']}")
-
-                while True:
-                    delete_confirmation = input("Delete this expense? [y/n]:")
-                    if delete_confirmation.lower() == 'y':    
-                        del expenses[choice_to_delete-1]
-                        dumpJSON()
-                        print("Deleted successfully")
-                        break
-                    elif delete_confirmation.lower() == 'n':
-                        print("Exiting DELETE")
-                        break
-                    else:
-                        print("Choose [y/n]! Try again!")
+                elif delete_confirmation.lower() == 'n':
+                    print("Exiting DELETE")
+                    break
+                else:
+                    print("Choose [y/n]! Try again!")
 
 
-            elif choice_to_delete == 0:
-                break
-            else:
-                print("Choose valid option, Try again!")         
+        elif choice_to_delete == 0:
+            break
+        else:
+            print("Choose valid option, Try again!")         
 
 
 def main():
