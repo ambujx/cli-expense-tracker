@@ -23,6 +23,7 @@ def del_expense(expenses, del_index):
             json.remove(expense)
 
 expenses = loadJSON()
+
 categories = []
 
 for item in expenses:
@@ -75,27 +76,32 @@ def writeExpAmount():
             print('Amount should be Greater than Zero, Try again!')  
 
 def chooseCategory():
-    print("Choose a Category: ")
-    print("0 -> Back")
-    for index, category in enumerate(categories, start=1):
-        print(f"{index}-> {category}")
-    print(f"{len(categories)+1}-> Create new category")
-    while True:
-        while True:
-            try:
-                categoryOption = int(input("Choose your option: "))
-                break
-            except ValueError:
-                print("Only integers are allowed, Try again!")
 
-        if categoryOption == 0:
-            expCategory = 0
-            return expCategory
-        
-        if categoryOption >= 1 and categoryOption <= len(categories)+1:
-            break
-        else:
-            print("Choose valid option as defined Above, Try again!")
+    if not categories:
+        categoryOption = 1
+
+    else:
+        print("Choose a Category: ")
+        print("0 -> Back")
+        for index, category in enumerate(categories, start=1):
+            print(f"{index}-> {category}")
+        print(f"{len(categories)+1}-> Create new category")
+        while True:
+            while True:
+                try:
+                    categoryOption = int(input("Choose your option: "))
+                    break
+                except ValueError:
+                    print("Only integers are allowed, Try again!")
+
+            if categoryOption == 0:
+                expCategory = 0
+                return expCategory
+            
+            if categoryOption >= 1 and categoryOption <= len(categories)+1:
+                break
+            else:
+                print("Choose valid option as defined Above, Try again!")
 
     if categoryOption == len(categories)+1:
         while True:
