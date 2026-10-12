@@ -144,7 +144,6 @@ def addExpense():
             break
 
         expense_dict = {
-            'id' : len(expenses)+1,
             'name': expName,
             'amount': expAmount,
             'category': expCategory
@@ -226,10 +225,9 @@ def viewExpense():
 
         elif choice == 3:
             break
+        else:
+            print("Choose correct option!")
 
-    print("1 -> View All to DELETE")
-    print("2 -> View By Category to DELETE")
-    print("3 -> Back")
 
 def delExpense():
     if not expenses :
