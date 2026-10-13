@@ -66,10 +66,12 @@ def writeExpAmount():
                 print('Amount should be a NUMBER, Try again!')
         if expAmount == 0:
             return 0
-        elif expAmount > 0:
+        elif expAmount > 0 and expAmount < 9999999999:
             return expAmount
+        elif expAmount == 'inf':
+            print("Amount can not be infinite!")
         else:
-            print('Amount should be Greater than Zero, Try again!')  
+            print('Amount should be Greater than Zero, and not be infinite, Try again!')
 
 def chooseCategory():
 
