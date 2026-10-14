@@ -2,7 +2,7 @@ import json
 import string
 import os
 import subprocess
-
+from ui import section_heading 
 
 
 def clear_terminal():
@@ -39,7 +39,7 @@ for item in expenses:
 
 def showMenu():
     print()
-    print('Choose Operation:')
+    section_heading('CHOOSE OPERATION')
     print("1 -> Add Expense")
     print("2 -> View Expenses")
     print("3 -> Delete Expense")
@@ -82,16 +82,14 @@ def writeExpAmount():
 
 def chooseCategory():
 
-    clear_terminal()
-
     if not categories:
         categoryOption = 1
 
     else:
-        print("Choose a Category: ")
+        section_heading("CHOOSE CATEGORY")
         for index, category in enumerate(categories, start=1):
-            print(f"\t{index}-> {category}")
-        print(f"\t{len(categories)+1}-> Create new category")
+            print(f"{index}-> {category}")
+        print(f"{len(categories)+1}-> Create new category")
         while True:
             while True:
                 try:
@@ -140,7 +138,7 @@ def chooseCategory():
 def addExpense():
     while True:
         clear_terminal()
-        print('Add Expense')
+        section_heading("ADD EXPENSE")
 
         print("0 -> Back")
         expName = writeExpName()
@@ -177,6 +175,7 @@ def showExpenseView():
 def viewAllExpense():
     clear_terminal()
     totalAmount = 0
+    section_heading("ALL EXPENSES")
     print(f"\n{'No.':<5}{'Expense':<15}{'Amount':<12}{'Category'}")
 
     for index, expense in enumerate(expenses, start=1):
@@ -186,7 +185,7 @@ def viewAllExpense():
 
 def viewByCategory():
     clear_terminal()
-    print("Choose Category: ")
+    section_heading("CHOOSE CATEGORY TO VIEW")
     for index,category in enumerate(categories, start=1):
         print(f"{index} -> {category}", end=" ")
         totalAmount = 0
@@ -209,7 +208,7 @@ def viewByCategory():
 
     target_category = categories[chooseCat-1]
     clear_terminal()
-    print(f"\nExpenses of {target_category}:")
+    section_heading(f"EXPENSES FROM '{target_category}'")
     index = 0
     total = 0
     for expense in expenses:
@@ -228,7 +227,7 @@ def viewExpense():
         return
 
     while True:
-        print('View Selected')
+        section_heading('VIEW SELECTED')
         showExpenseView()
         while True:
             try:
