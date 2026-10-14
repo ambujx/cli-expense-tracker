@@ -1,7 +1,16 @@
 import json
 import string
 import os
+import subprocess
 
+
+
+def clear_terminal():
+    # Identify the correct terminal command
+    command = 'clear' if os.name == 'nt' else 'clear'
+    
+    # Execute securely using the subprocess module
+    subprocess.run(command, shell=True)
 
 def loadJSON():
     if not os.path.exists("expenses.json"):
@@ -38,7 +47,6 @@ def showMenu():
 
 def writeExpName():
     while True:
-        print("0 -> Back")
         expName = input('\tExpense name: ')
         if expName == "0":
             return 0
@@ -57,7 +65,6 @@ def writeExpName():
 
 def writeExpAmount():
     while True:
-        print("0 -> Back")
         while True:
             try:
                 expAmount = float(input('\tAmount: '))
@@ -75,15 +82,16 @@ def writeExpAmount():
 
 def chooseCategory():
 
+    clear_terminal()
+
     if not categories:
         categoryOption = 1
 
     else:
         print("Choose a Category: ")
-        print("0 -> Back")
         for index, category in enumerate(categories, start=1):
-            print(f"{index}-> {category}")
-        print(f"{len(categories)+1}-> Create new category")
+            print(f"\t{index}-> {category}")
+        print(f"\t{len(categories)+1}-> Create new category")
         while True:
             while True:
                 try:
@@ -131,8 +139,10 @@ def chooseCategory():
 
 def addExpense():
     while True:
-        print('Add Expense:')
+        clear_terminal()
+        print('Add Expense')
 
+        print("0 -> Back")
         expName = writeExpName()
         if expName == 0:
             break
@@ -155,6 +165,7 @@ def addExpense():
 
         dumpJSON()
 
+        clear_terminal()
         print('Expense added successfully!')
         break
 
@@ -164,6 +175,7 @@ def showExpenseView():
     print("3 -> Back")
 
 def viewAllExpense():
+    clear_terminal()
     totalAmount = 0
     print(f"\n{'No.':<5}{'Expense':<15}{'Amount':<12}{'Category'}")
 
@@ -173,6 +185,7 @@ def viewAllExpense():
     print(f"\nTotal: {totalAmount}\n")
 
 def viewByCategory():
+    clear_terminal()
     print("Choose Category: ")
     for index,category in enumerate(categories, start=1):
         print(f"{index} -> {category}", end=" ")
@@ -195,6 +208,7 @@ def viewByCategory():
             print("Choose valid option, Try again!")
 
     target_category = categories[chooseCat-1]
+    clear_terminal()
     print(f"\nExpenses of {target_category}:")
     index = 0
     total = 0
@@ -206,11 +220,15 @@ def viewByCategory():
     print (f"\nTotal: {total}\n")
 
 def viewExpense():
+
+    clear_terminal()
+
     if not expenses:
         print("No expense present, Create expense")
         return
 
     while True:
+        print('View Selected')
         showExpenseView()
         while True:
             try:
@@ -226,6 +244,7 @@ def viewExpense():
             viewByCategory()
 
         elif choice == 3:
+            clear_terminal()
             break
         else:
             print("Choose correct option!")
@@ -233,6 +252,7 @@ def viewExpense():
 
 def delExpense():
     if not expenses :
+        clear_terminal()
         print("No Expense Found")
         return
 
@@ -240,10 +260,11 @@ def delExpense():
         if not expenses:
             break
         viewAllExpense()
+        print (" 0 => Back")
+        print ("-1 => Delete ALL")
         while True:
             try:
-                print ("0 => Back")
-                choice_to_delete = int(input("Choose expense to DELETE: "))                
+                choice_to_delete = int(input("Choose expense No. to DELETE: "))                
                 break
             except ValueError:
                 print("Invalid Input, Enter only integers")
@@ -258,6 +279,7 @@ def delExpense():
                 if delete_confirmation.lower() == 'y':    
                     del expenses[choice_to_delete-1]
                     dumpJSON()
+                    clear_terminal()
                     print("Deleted successfully")
                     break
                 elif delete_confirmation.lower() == 'n':
@@ -266,8 +288,24 @@ def delExpense():
                 else:
                     print("Choose [y/n]! Try again!")
 
+        elif choice_to_delete == -1:
+            while True:
+                delete_confirmation = input("Delete this expense? [y/n]:")
+                if delete_confirmation.lower() == 'y':    
+                    expenses.clear()
+                    dumpJSON()
+                    clear_terminal()
+                    print("Deleted successfully")
+                    break
+                elif delete_confirmation.lower() == 'n':
+                    print("Exiting DELETE")
+                    break
+                else:
+                    print("Choose [y/n]! Try again!")
+            break
 
         elif choice_to_delete == 0:
+            clear_terminal()
             break
         else:
             print("Choose valid option, Try again!")         
@@ -288,13 +326,14 @@ def main():
             addExpense()
 
         elif choice == 2:
-            print('View Selected')
             viewExpense()
 
         elif choice == 3:
+            print('Delete Selected')
             delExpense()
 
         elif choice == 4:
+            clear_terminal()
             print('Goodbye!')
             break
 
