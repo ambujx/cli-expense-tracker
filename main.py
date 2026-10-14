@@ -3,6 +3,7 @@ import string
 import os
 import subprocess
 from ui import section_heading
+import time
 
 
 def clear_terminal():
@@ -317,6 +318,7 @@ def delete_expenses():
             break
         else:
             print("Invalid option. Please choose an option from the list.")
+            time.sleep(3)
 
 
 def main():
